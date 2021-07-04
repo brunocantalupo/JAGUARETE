@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <div style="padding-right: 200px;padding-left: 200px; padding-top: 20px;padding-bottom: 20px;">
+        <h1 style="text-align: center;">RESULTADO BUSQUEDA</h1>
+        <br>
+        <ul>
+            {% for producto in productos %}
+                <li>
+                    <p> {{producto.titulo}}. {{producto.descripcion}}. ${{producto.precio}} <a href="{% url 'TIENDAROPA:verProducto' id=producto.id %}">Ver Producto</a> </p> 
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

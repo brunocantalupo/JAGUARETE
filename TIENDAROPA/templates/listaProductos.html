@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% load static %}
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">    
+
+    <div>
+        <div class="columns">
+            <div class="column">
+                <div class="d-flex justify-content-center mt-3 login_container" style="margin-bottom: 4%; text-align: center;">
+                    <a href= "{% url 'TIENDAROPA:agregarProducto' %}" class="btn btn-info rounded-0 py-2">AGREGAR</a>
+                </div>
+                <table class="table" style="background-color: #FFFFFF80;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">Titulo</th>
+                            <th style="text-align: center">Descripcion</th>
+                            <th style="text-align: center">Precio</th>
+                            <th style="text-align: center">Categorias</th>
+                            <th style="text-align: center">Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td style="text-align: center">{{producto.titulo}}</td>
+                            <td style="text-align: center">{{producto.descripcion}}</td>
+                            <td style="text-align: center">{{producto.precio}}</td>
+                            <td style="text-align: center">{{producto.categoria.descripcionCategoria}}</td>
+                            <td>
+                                <div style="text-align: center;">
+                                    <a style="margin-right: 1%;" href= "{% url 'TIENDAROPA:render_editar_producto' id=producto.id %}" class="btn btn-warning">Editar</a>
+                                    <a href= "{% url 'TIENDAROPA:eliminarProducto' id=producto.id %}"  onclick= "return confirm('Estas seguro que deseas eliminar?')" class="btn btn-danger">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container" style="margin-bottom: 4%; text-align: center;">
+                <a href= "{% url 'TIENDAROPA:index' %}" class="btn btn-info rounded-0 py-2">VOLVER ATRAS</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

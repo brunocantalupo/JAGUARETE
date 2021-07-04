@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <div style="padding-right: 200px;padding-left: 200px; padding-top: 20px;padding-bottom: 20px;">
+        <h1 style="text-align: center;">CARRITO</h1>
+        <h2><b>{{user.first_name}} {{user.last_name}}</b></h2>
+        <ol>
+            {% for producto in productos %}
+                <li>
+                    <p>{{producto.nombre}}. {{producto.descripcion}}. ${{producto.precio}} <a href="{% url 'TIENDAROPA:eliminarProductoDelCarrito' id=producto.id %}">Eliminar</a></p>
+                </li>
+            {% endfor %}
+        </ol>
+        <br>
+        <h4 style="text-align: center;">TOTAL: ${{carrito.total}}</h4>
+        <br>
+        <div  class="text-center">
+            <a class="btn btn-info rounded-0 py-2" href="{% url 'TIENDAROPA:vaciarCarrito' %}">VACIAR CARRITO</a>
+            <a class="btn btn-info rounded-0 py-2" href="#">FINALIZAR COMPRA</a>
+        </div>
+    </div>
+{% endblock %}

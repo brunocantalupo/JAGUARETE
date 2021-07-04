@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% load static %}
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <div style="margin: 20px 200px 20px 200px;">
+        <h1 style="text-align: center;">{{producto.titulo}}</h1>
+        <br>
+        <div>
+            <p>
+                <img src="{{producto.imagen}}" alt="{{producto.titulo}}" width="200" height="180" style="padding-left: 50px; float: left;">
+                <div style="padding-left: 280px;">
+                    <span style="text-align: left;"><b>CATEGORIA: </b>
+                    {{producto.categoria.descripcionCategoria}}
+                    </span>
+                    <br>
+                    <br>
+                    <span style="text-align: left;"><b>DESCRIPCION DEL PRODUCTO: </b>
+                    {{producto.descripcion}}
+                    </span>
+                </div>
+            </p>
+        </div>  
+        <br>
+        <br>
+        <br>
+        <h2 style="text-align: center; clear: both;">PRECIO: ${{producto.precio}}</h2>
+    </div>
+    <div  class="text-center">
+        <a class="btn btn-info rounded-0 py-2" href="{% url 'TIENDAROPA:index' %}">VOLVER ATRAS</a>
+        {% if not tipo %}
+            <a class="btn btn-info rounded-0 py-2" href="{% url 'TIENDAROPA:agregarAlCarrito' id=producto.id %}">AGREGAR AL CARRITO</a>
+        {% endif %}
+    </div>
+{% endblock %}

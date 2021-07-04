@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% load static %}   
+    <div style="padding-right: 200px;padding-left: 200px; padding-top: 20px;padding-bottom: 20px;">
+        <p style="font-family: 'Times New Roman', Times, serif; font-size:larger;">JAGUARETE es un emprendimiento 100% online de venta de juegos y juguetes. Brindamos una experiencia de 
+            compra ágil y simple, pensada y desarrollada para que nuestros clientes puedan encontrar y comprar lo
+            que buscan en el menor tiempo posible de forma fácil y sin complicaciones.
+            Queremos ofrecer la mayor cantidad y calidad de servicios para lograr excelencia en atención y asesoraramiento.</p>
+        <div style="margin: 10px;">
+            <img src="{% static 'logo.png' %}" alt="JAGUARETE" width="200" height="200" style="padding: 10px;border-radius: 50%">
+            <img src="{% static 'enviogratis.jpg' %}" alt="Envio Gratis" width="200" height="200" style="padding: 10px;border-radius: 50%;margin-left: 200px">
+            <img src="{% static 'comprarapida.jpg' %}" alt="Compra rapida" width="200" height="200" style="padding: 10px;border-radius: 50%;margin-left: 200px;">
+        </div>
+        <div>
+            <span style="margin-left: 40px;">SOMOS JAGUARETE</span>
+            <span style="margin-left: 320px">ENVIO GRATIS</span>
+            <span style="margin-left: 320px">COMPRA RAPIDA</span>
+        </div>
+    </div>
+{% endblock %}
