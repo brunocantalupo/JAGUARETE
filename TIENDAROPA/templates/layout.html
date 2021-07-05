@@ -22,8 +22,8 @@
 <body style="background-color: cadetblue;">
     <!-- ------encabezado------ -->
     <div style="margin: 8px; background-color: #FFFFFF80; padding: 5px;">
-        <img src="{% static 'logo.png' %}" alt="image" style="width: 100px; border-radius: 50%;padding: 10px;">
-        <ul class="nav nav-pills justify-content-end">
+        <img src="{% static 'logo.png' %}" alt="image" style="width: 100px; border-radius: 50%;padding: 10px;float: left;">
+        <ul class="nav nav-pills justify-content-end" style="margin-top: 20px;margin-bottom: 20px;">
             {% if not ok %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'TIENDAROPA:login' %}">Iniciar Sesion</a>

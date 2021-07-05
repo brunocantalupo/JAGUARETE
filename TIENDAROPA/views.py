@@ -3,6 +3,8 @@ from django.contrib.auth import login as do_login, authenticate, logout as do_lo
 from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import Carrito, Producto, Categoria
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -26,7 +28,7 @@ def login (request):
         print (username)
         password = request.POST['password']
         print (password)
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username, password=password).first()
         print (user)
         if user is not None:
             do_login(request, user)
@@ -54,6 +56,19 @@ def acercaDe(request):
 def contacto(request):
     categorias = Categoria.objects.all()
     return render(request, "contacto.html", {'ok': request.user.is_authenticated, 'tipo':request.user.is_staff, 'categorias':categorias})
+
+def contactar(request):
+    nombre = request.POST['nombre']
+    email = request.POST['email']
+    men = request.POST['body']
+    mensaje = EmailMessage(
+        subject='Mensaje de usuario',
+        body=men,
+        from_email=email,
+        to=['jaguarete@gmail.com']
+    )
+    mensaje.content_subtype = 'html'
+    mensaje.send()
 
 def carrito(request):
     if not request.user.is_authenticated:

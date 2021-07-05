@@ -121,6 +121,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = 'D:\bruno\Documents\Cursos\TPFINAL'
+
+MEDIA_URL = '../'
+
+STATICFILES_DIRS = (
+
+'D:\bruno\Documents\Cursos\TPFINAL\TIENDAROPA\static',
+)
+
 LOGIN_REDIRECT_URL = reverse_lazy('TIENDAROPA:index')
 LOGOUT_REDIRECT_URL= reverse_lazy('TIENDAROPA:login')
 

@@ -6,8 +6,6 @@ from django.contrib.auth.views import LoginView,logout_then_login
 app_name = "TIENDAROPA"
 urlpatterns = [
     path('',views.index, name="index"),
-    # path('login/',views.render_Iniciar_Sesion, name="login"),
-    # path('loginUser/',views.login, name="loginUser"),
     path('register/',views.render_Registrar, name="register"),
     path('registerUser/',views.register, name="registerUser"),
     path('login/',views.render_login,name='login'),
@@ -15,6 +13,7 @@ urlpatterns = [
     path('logout/',views.logout,name='logout'),
     path('acercaDe/',views.acercaDe,name='acercaDe'),
     path('contacto/',views.contacto,name='contacto'),
+    path('contactar/',views.contactar,name='contactar'),
     path('carrito/',views.carrito,name='carrito'),
     path('productos/',views.listaProductos,name='listaProductos'),
     path('verProducto/<id>/',views.verProducto,name='verProducto'),

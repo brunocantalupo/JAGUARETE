@@ -35,7 +35,7 @@
                 {% for each in primeros3 %}
                     <div class="grid-item">
                             <h3><b>{{each.titulo | upper}}</b></h3><br>
-                            <img src="{{each.imagen}}" alt="{{each.titulo}}" height="150" width="150"><br><br>
+                            <img src="{{setting.STATIC_URL}}{{each.imagen}}" alt="{{each.titulo}}" height="150" width="150"><br><br>
                             <a href= "{% url 'TIENDAROPA:verProducto' id=each.id %}" class="btn btn-info rounded-0 py-2">VER PRODUCTO</a>
                     </div>      
                 {% endfor %}  
