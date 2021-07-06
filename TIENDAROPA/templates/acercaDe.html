@@ -1,20 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
     {% load static %}   
+
+    <style>
+        .grid{
+            text-align: center;
+            width: 70%; 
+            display: grid;
+            grid-column-gap: 2px;
+            grid-row-gap: 2px; 
+            grid-template-columns: auto auto auto auto;
+            padding: 1%;
+        }
+
+        .grid-item{
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+
     <div style="padding-right: 200px;padding-left: 200px; padding-top: 20px;padding-bottom: 20px;">
-        <p style="font-family: 'Times New Roman', Times, serif; font-size:larger;">JAGUARETE es un emprendimiento 100% online de venta de juegos y juguetes. Brindamos una experiencia de 
+        <p style="font-family: 'Times New Roman', Times, serif; font-size:larger;">JAGUARETE es un emprendimiento 100% online de venta de ropa para hombres. Brindamos una experiencia de 
             compra ágil y simple, pensada y desarrollada para que nuestros clientes puedan encontrar y comprar lo
             que buscan en el menor tiempo posible de forma fácil y sin complicaciones.
             Queremos ofrecer la mayor cantidad y calidad de servicios para lograr excelencia en atención y asesoraramiento.</p>
-        <div style="margin: 10px;">
-            <img src="{% static 'logo.png' %}" alt="JAGUARETE" width="200" height="200" style="padding: 10px;border-radius: 50%">
-            <img src="{% static 'enviogratis.jpg' %}" alt="Envio Gratis" width="200" height="200" style="padding: 10px;border-radius: 50%;margin-left: 200px">
-            <img src="{% static 'comprarapida.jpg' %}" alt="Compra rapida" width="200" height="200" style="padding: 10px;border-radius: 50%;margin-left: 200px;">
-        </div>
-        <div>
-            <span style="margin-left: 40px;">SOMOS JAGUARETE</span>
-            <span style="margin-left: 320px">ENVIO GRATIS</span>
-            <span style="margin-left: 320px">COMPRA RAPIDA</span>
+        <div class='grid' style="margin: 10px;">
+            <div class="grid-item" style="margin-right: 150px">
+                <img src="{% static 'logo.png' %}" alt="JAGUARETE" width="200" height="200" style="border-radius: 50%">
+                <p style="margin-top: 10px">SOMOS JAGUARETE</p>
+            </div>
+            <div class="grid-item" style="margin-right: 150px">
+                <img src="{% static 'enviogratis.jpg' %}" alt="Envio Gratis" width="200" height="200" style="border-radius: 50%">
+                <p style="margin-top: 10px">ENVIO GRATIS</p>
+            </div>
+            <div class="grid-item">
+                <img src="{% static 'comprarapida.jpg' %}" alt="Compra rapida" width="200" height="200" style="border-radius: 50%">
+                <p style="margin-top: 10px">COMPRA RAPIDA</p>
+            </div>
         </div>
     </div>
 {% endblock %}

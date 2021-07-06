@@ -6,31 +6,47 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'login.css' %}">
 
+    <style>
+        .form-option{
+            width: 100%;
+            padding: 5px;
+            background: #f7f7f7 none repeat scroll 0 0;
+            border: 1px solid #d4d4d4;
+        }
+    </style>
+
     <div class="container">
         <div class="login-form">
             <div class="main-div">
                 <div class="panel">
                     <h2>Editar producto</h2>
                 </div>
-                <form id="Login" action="{% url 'TIENDAROPA:editarProducto' %}" method="POST">
+                <form id="Login" enctype="multipart/form-data" action="{% url 'TIENDAROPA:editarProducto' id=producto.id %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
                         <input type="text" class="form-control" value={{producto.titulo}} name="titulo" placeholder="Titulo">
                     </div>
-                    <div class="form-group">
-                        <input type="file" class="form-control" value={{producto.imagen}} name="imagen" placeholder="Imagen">
+                    <div>
+                        <a href="{% url 'TIENDAROPA:mostrarFoto' id=producto.id%}" target="_blank">Imagen del producto</a>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" value={{producto.descripcion}} name="descripcion" placeholder="Descripcion">
+                        <input type="file" class="form-control" name="imagen" placeholder="Imagen">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-option" name="descripcion" id="descripcion" rows=1 style="height: 100px;">{{producto.desc}}</textarea>
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control" value={{producto.precio}} name="precio" placeholder="Precio">
                     </div>
                     <div class="form-group">
                         <label for="categoria">Seleccione categorias</label>
-                        <select value={{producto.categoria.id}} name="categorias" class="form-control">
+                        <select name="categoria" id="categoria" class="form-option">
                             {% for categoria in categorias %}
-                                <option value="{{categoria.id}}">{{categoria.descripcionCategoria}}</option>
+                                {% if categoria.id == producto.categoria.id %}
+                                    <option value="{{categoria.id}}" selected>{{categoria.descripcionCategoria}}</option>
+                                {% else %}
+                                    <option value="{{categoria.id}}">{{categoria.descripcionCategoria}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>

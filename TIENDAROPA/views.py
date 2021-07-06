@@ -1,18 +1,28 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import login as do_login, authenticate, logout as do_logout
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from datetime import datetime
 from .models import Carrito, Producto, Categoria
 from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
+import base64
+from django.http import HttpResponse
 
 # Create your views here.
 
 def index(request):
     productos = Producto.objects.all().order_by('-fecha')
     primeros3 = productos[:3]
+    post = []
+    for each in primeros3:
+        post.append({
+                'id': each.id,
+                'img': base64.b64encode(each.img).decode("utf-8"),
+                'nombre': each.titulo,
+                'descripcion': each.descripcionProducto,
+                'precio': each.precio,
+        })
     categorias = Categoria.objects.all()
-    return render(request, "home.html", {'ok': request.user.is_authenticated, 'tipo':request.user.is_staff, 'productos':productos, 'categorias':categorias, 'primeros3': primeros3})
+    return render(request, "home.html", {'ok': request.user.is_authenticated, 'tipo':request.user.is_staff, 'productos':productos, 'categorias':categorias, 'primeros3': post})
 
 def render_Registrar(request):
     categorias = Categoria.objects.all()
@@ -25,16 +35,12 @@ def render_login(request):
 def login (request):
     if request.method == 'POST':
         username = request.POST['username']
-        print (username)
         password = request.POST['password']
-        print (password)
         user = User.objects.filter(username=username, password=password).first()
-        print (user)
         if user is not None:
             do_login(request, user)
             return redirect('TIENDAROPA:index')
         else:
-            print ("TIRA ERROR")
             return redirect('TIENDAROPA:login')
 
 def logout(request):
@@ -43,11 +49,12 @@ def logout(request):
 
 def register(request):
     if (request.method == "POST"):
-        User.objects.create(username=request.POST['email'], first_name=request.POST["nombre"], last_name=request.POST["apellido"], email= request.POST["email"], password=request.POST["password"])
-        user = User.objects.get(username = request.POST['email'])
-        Carrito.objects.create(usuario=user, total=0)
-        return redirect('TIENDAROPA:login')
-    return redirect('TIENDAROPA:register')
+        if (User.objects.filter(email=request.POST['email']).first() is None):
+            User.objects.create(username=request.POST['email'], first_name=request.POST["nombre"], last_name=request.POST["apellido"], email= request.POST["email"], password=request.POST["password"])
+            user = User.objects.get(username = request.POST['email'])
+            Carrito.objects.create(usuario=user, total=0)
+            return redirect('TIENDAROPA:login')
+        return redirect('TIENDAROPA:register')
 
 def acercaDe(request):
     categorias = Categoria.objects.all()
@@ -113,7 +120,7 @@ def verProducto(request, id):
     productoPost = {
         'id': producto.id,
         'titulo': producto.titulo,
-        'imagen': producto.imagen,
+        'imagen': base64.b64encode(producto.img).decode("utf-8"),
         'descripcion': producto.descripcionProducto,
         'precio': producto.precio,
         'categoria': producto.categoria
@@ -150,7 +157,8 @@ def agregar(request):
     if request.user.is_staff:
         if request.method == 'POST':
             categoria=Categoria.objects.get(id=request.POST['categoria'])
-            Producto.objects.create(titulo=request.POST['titulo'], imagen=request.POST['imagen'], descripcionProducto=request.POST['descripcion'], precio=request.POST['precio'], categoria=categoria)
+            imagen = request.FILES['imagen']
+            Producto.objects.create(titulo=request.POST['titulo'], img=imagen.read(), mimetype=imagen.content_type, name= imagen.name, descripcionProducto=request.POST['descripcion'], precio=request.POST['precio'], categoria=categoria)
             return redirect('TIENDAROPA:listaProductos')
 
 def eliminarProducto(request,id):
@@ -166,18 +174,33 @@ def render_editar_producto(request,id):
         productoPost = {
             'id': producto.id,
             'titulo': producto.titulo,
-            'imagen': producto.imagen,
-            'descripcion': producto.descripcionProducto,
+            'desc': producto.descripcionProducto,
             'precio': producto.precio,
             'categoria': producto.categoria
         }
+        print(productoPost['desc'])
         return render (request, 'editarProducto.html',{'ok': request.user.is_authenticated, 'tipo':request.user.is_staff, 'categorias':categorias, 'producto': productoPost})
+
+def mostrar_foto(request, id):
+    producto = Producto.objects.get(id=id)
+    return HttpResponse(producto.img, content_type = producto.mimetype)
 
 def editarProducto(request,id):
     if request.user.is_staff:
-        producto = Producto.objects.get(id=id)
-        producto.delete()
-        return redirect('TIENDAROPA:listaProductos')
+        if request.method == 'POST':
+            producto = Producto.objects.get(id=id)
+            producto.titulo = request.POST['titulo']
+            if len(request.FILES) > 0 :
+                image = request.FILES['imagen']
+                producto.img=image.read()
+                producto.mimetype=image.content_type
+                producto.name=image.name 
+            producto.descripcionProducto = request.POST['descripcion']
+            producto.precio = request.POST['precio']
+            categoria=Categoria.objects.get(id=request.POST['categoria'])
+            producto.categoria = categoria
+            producto.save()
+            return redirect('TIENDAROPA:listaProductos')
 
 def eliminarProductoDelCarrito(request,id):
     if request.user.is_authenticated:

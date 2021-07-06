@@ -22,9 +22,10 @@ urlpatterns = [
     path('agregarProducto/',views.agregarProducto,name='agregarProducto'),
     path('agregar/',views.agregar,name='agregar'),
     path('render_editar_producto/<id>/',views.render_editar_producto,name='render_editar_producto'),
-    path('editarProducto/',views.editarProducto,name='editarProducto'),
+    path('editarProducto/<id>',views.editarProducto,name='editarProducto'),
     path('eliminarProducto/<id>/',views.eliminarProducto,name='eliminarProducto'),
     path('eliminarProductoDelCarrito/<id>/',views.eliminarProductoDelCarrito,name='eliminarProductoDelCarrito'),
     path('verProductosDeCategoria/<id>/',views.verProductosDeCategoria,name='verProductosDeCategoria'),
     path('buscar/',views.buscar,name='buscar'),
+    path('mostrarFoto/<id>/',views.mostrar_foto,name='mostrarFoto'),
 ]

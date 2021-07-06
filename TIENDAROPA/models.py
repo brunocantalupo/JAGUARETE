@@ -10,7 +10,9 @@ class Categoria(models.Model):
 
 class Producto(models.Model):
     titulo = models.CharField(max_length=60) 
-    imagen = models.FileField(upload_to='static/')
+    img= models.BinaryField(null=True)
+    mimetype = models.CharField(max_length=150, null=True)
+    name = models.CharField(max_length=150, null=True)
     descripcionProducto = models.CharField(max_length=150)  
     precio = models.FloatField() 
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=False)
@@ -20,6 +22,7 @@ class Carrito(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     productos = models.ManyToManyField(Producto)
     total = FloatField()
+
 
 
 
